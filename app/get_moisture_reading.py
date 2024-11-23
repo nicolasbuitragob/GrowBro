@@ -15,7 +15,7 @@ session = get_session()
 
 
 def read_calibration_values():
-    with open('sensor_calibration.json', 'r') as f:
+    with open(os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '/sensor_calibration.json', 'r') as f:
         return json.load(f)
 
 calibration_values = read_calibration_values()
