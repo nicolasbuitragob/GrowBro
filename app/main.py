@@ -7,7 +7,7 @@ from database.connection import get_session
 from database.models import MoistureRecord
 from typing import List
 from fastapi.responses import HTMLResponse
-from views.moisture import get_moisture_view
+from views.moisture import get_moisture_view,get_moisture_table
 
 app = FastAPI()
 
@@ -21,3 +21,7 @@ def read_root():
 @app.get("/plants/{plant_id}/moisture-view")
 def moisture_view(request: Request,plant_id: int):
     return get_moisture_view(request,plant_id)
+
+@app.get("/plants/{plant_id}/moisture-table")
+def moisture_table(request: Request,plant_id: int):
+    return get_moisture_table(request,plant_id)

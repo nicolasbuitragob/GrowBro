@@ -12,9 +12,11 @@ templates = Jinja2Templates(directory="templates")
 def get_moisture_data(plant_id):
     session = get_session()
     query = select(MoistureRecord.moisture_level,
-                   MoistureRecord.created_at).where(MoistureRecord.plant_id == plant_id)
+                   MoistureRecord.created_at,
+                   MoistureRecord.plant_id).where(MoistureRecord.plant_id == plant_id)
     
     results = session.exec(query).all()
+
     return results
 
     
@@ -34,4 +36,9 @@ def get_moisture_view(request: Request,plant_id: int):
         }
     )
 
-
+def get_moisture_table(request: Request,plant_id: int):
+    data = get_moisture_data(plant_id=plant_id)
+    return templates.TemplateResponse(
+        "moisture_table.html",
+        {"request": request, "data": data}
+    )   
