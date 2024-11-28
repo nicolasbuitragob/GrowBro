@@ -14,15 +14,17 @@ def calibrate_moisture_sensor(type):
     values = []
     assert type in ['wet', 'dry']
 
-    for _ in range(10):
+    for _ in range(30):
         values.append(channel.value)
         time.sleep(0.5)
 
-    mean = sum(values) / len(values)
-    return mean
+    if type == 'wet':
+        return min(values)
+    else:
+        return max(values)
 
 def create_calibration_file():
-    default_values = {'mean_wet_value': None, 'mean_dry_value': None}
+    default_values = {'min_wet_value': None, 'max_dry_value': None}
     
     # If file doesn't exist or is empty, write default values
     if not os.path.exists('sensor_calibration.json') or os.path.getsize('sensor_calibration.json') == 0:
@@ -39,9 +41,9 @@ if __name__ == "__main__":
     calibration_data = create_calibration_file()  # Now returns the dict directly
     arg = sys.argv[1]
     if arg == 'wet':
-        calibration_data['mean_wet_value'] = calibrate_moisture_sensor('wet')
+        calibration_data['min_wet_value'] = calibrate_moisture_sensor('wet')
     elif arg == 'dry':
-        calibration_data['mean_dry_value'] = calibrate_moisture_sensor('dry')
+        calibration_data['max_dry_value'] = calibrate_moisture_sensor('dry')
     else:
         raise ValueError("Type must be 'wet' or 'dry'")
     
