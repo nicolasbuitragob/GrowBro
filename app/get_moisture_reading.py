@@ -50,7 +50,7 @@ if __name__ == "__main__":
     async def main():
         try:
             channel = create_chanel()
-            value = get_moisture_reading(channel.value)
+            value = await get_moisture_reading(channel.value)
             record = MoistureRecord(moisture_level=value,plant_id=1,created_at=datetime.now(),updated_at=datetime.now())
             create_moisture_record(session,record)
 
