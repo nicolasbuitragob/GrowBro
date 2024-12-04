@@ -16,6 +16,7 @@ from moisture_sensor.create_chanel import create_chanel
 from aiogram import Bot, Dispatcher, html
 
 TOKEN = getenv("TELEGRAM_BOT_TOKEN")
+CHAT_ID = getenv("TELEGRAM_CHAT_ID")
 bot = Bot(token=TOKEN)
 session = get_session()
 dp = Dispatcher()
@@ -24,7 +25,7 @@ dp = Dispatcher()
 async def send_moisture_reading_alert(moisture_reading):
     bot = Bot(token=TOKEN)
     try:
-        await bot.send_message(chat_id=7364502823, text=f"hey something is wrong!!! the moisture level is {moisture_reading}")
+        await bot.send_message(chat_id=CHAT_ID, text=f"hey something is wrong!!! the moisture level is {moisture_reading}")
     finally:
         await bot.session.close()
 
